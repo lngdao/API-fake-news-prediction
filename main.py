@@ -1,6 +1,9 @@
 import os
 import click
 import uvicorn
+from dotenv import load_dotenv
+
+load_dotenv()
 
 @click.command()
 @click.option('--host', default='127.0.0.1', help='Host address')

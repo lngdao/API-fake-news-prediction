@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.post.services.post import PostService
+from app.post.service.post import PostService
 
 post_router = APIRouter()
 
