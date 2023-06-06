@@ -15,7 +15,7 @@ class TokenPayload(BaseModel):
 
 def generate_token(username, isAdmin) -> str:
     expire = datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
-    to_encode = {"exp": expire, "sub": username, "namespaces": "user_role"}
+    to_encode = {"exp": expire, "sub": username, "namespaces": "admin_role" if isAdmin else "user_role"}
     encoded_jwt = jwt.encode(to_encode, os.getenv("SECRET_KEY"), algorithm="HS256")
 
     return encoded_jwt

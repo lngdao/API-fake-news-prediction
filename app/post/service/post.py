@@ -32,12 +32,13 @@ class PostService:
         return post
 
     async def create_post(self, req_data) -> Post:
+        current_time = datetime.now()
         result = connection.db["post"].insert_one(
             {
                 "title": req_data.title,
                 "description": req_data.description,
                 "content": req_data.content,
-                "created_at": req_data.created_at,
+                "created_at": current_time,
                 "image": req_data.image,
             }
         )
@@ -48,7 +49,7 @@ class PostService:
             title=req_data.title,
             description=req_data.description,
             content=req_data.content,
-            created_at=req_data.created_at,
+            created_at=current_time,
             image=req_data.image,
         )
 
@@ -58,3 +59,15 @@ class PostService:
         result = "Tin giả 100% nha quý zị"
 
         return result
+
+    async def delete_post(self, post_id):
+        post = connection.db["post"].find_one({"_id": ObjectId(post_id)})
+
+        if not post:
+            raise HTTPException(
+                status_code=403, detail="the post does not exist in the system"
+            )
+
+        connection.db["post"].delete_one({"_id": ObjectId(post_id)})
+
+        return True

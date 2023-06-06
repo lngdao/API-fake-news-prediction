@@ -34,7 +34,7 @@ class AuthService:
 
         if not user or (user and user["password"] != req_data.password):
             raise HTTPException(status_code=403, detail="Incorrect account or password")
-
+        print(user["isAdmin"])
         token = permission.generate_token(
             username=req_data.username, isAdmin=user["isAdmin"]
         )

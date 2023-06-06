@@ -4,7 +4,6 @@ from app.post.service.post import PostService
 from security import permission
 import helper
 from pydantic import BaseModel
-from datetime import datetime
 
 post_router = APIRouter()
 
@@ -13,8 +12,8 @@ class CreatePostRequest(BaseModel):
     title: str
     description: str
     content: str
-    created_at: datetime
     image: str
+
 
 class PredictionRequest(BaseModel):
     content: str
@@ -47,4 +46,12 @@ async def prediction_post_content(
     req_data: PredictionRequest, token_data=Depends(permission.is_admin)
 ):
     post = await PostService().prediction_post_content(req_data)
+    return helper.transformData(post)
+
+
+@post_router.delete("/{post_id}")
+async def prediction_post_content(
+    post_id: str, token_data=Depends(permission.is_admin)
+):
+    post = await PostService().delete_post(post_id)
     return helper.transformData(post)
