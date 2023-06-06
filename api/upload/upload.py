@@ -6,14 +6,18 @@ from datetime import datetime
 import shutil
 import os
 import uuid
+from security import permission
 from deta import Drive
 
 upload_router = APIRouter()
 
 drive = Drive("photos")
 
+
 @upload_router.post("")
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(
+    file: UploadFile = File(...), token_data=Depends(permission.is_authenticated)
+):
     file_extension = os.path.splitext(file.filename)[1]
     new_filename = f"{str(uuid.uuid4()).replace('-', '')}{file_extension}"
     # file_path = os.path.join("public", new_filename)
@@ -30,7 +34,7 @@ async def upload_file(file: UploadFile = File(...)):
 
 
 @upload_router.get("/file/{file_name}")
-async def upload_file(file_name: str):
+async def upload_file(file_name: str, token_data=Depends(permission.is_authenticated)):
     data = drive.get(file_name)
     content = data.read()
 
