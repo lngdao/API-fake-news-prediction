@@ -4,7 +4,7 @@ import os
 from api.home.home import home_router
 from api import router
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+# from fastapi.staticfiles import StaticFiles
 from deta import Deta
 
 import ssl
@@ -30,7 +30,7 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    app_.mount("/public", StaticFiles(directory="public"), name="public")
+    # app_.mount("/public", StaticFiles(directory="public"), name="public")
     init_routers(app_=app_)
     return app_
 
