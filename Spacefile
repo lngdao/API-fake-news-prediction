@@ -1,0 +1,9 @@
+v: 0
+micros:
+  - name: fake-news-api
+    src: ./
+    engine: python3.9
+    primary: true
+    run: uvicorn app.server:app
+    public_routes:
+      - "/*"
