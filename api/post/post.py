@@ -45,8 +45,8 @@ async def create_post(
 async def prediction_post_content(
     req_data: PredictionRequest, token_data=Depends(permission.is_admin)
 ):
-    post = await PostService().prediction_post_content(req_data)
-    return helper.transformData(post)
+    status = await PostService().prediction_post_content(req_data)
+    return helper.transformData(status)
 
 
 @post_router.delete("/{post_id}")

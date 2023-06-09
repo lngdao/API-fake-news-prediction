@@ -11,10 +11,14 @@ class UserService:
 
     async def get_profile(self, identifier):
         user = connection.db["user"].find_one({"username": identifier})
-        
+
         if not user:
-          raise HTTPException(status_code=403, detail="An error occurred") 
-        
-        profile = {"username": user["username"], "name": user["name"]}
+            raise HTTPException(status_code=403, detail="An error occurred")
+
+        profile = {
+            "username": user["username"],
+            "name": user["name"],
+            "role": 1 if user["isAdmin"] else 0,
+        }
 
         return profile

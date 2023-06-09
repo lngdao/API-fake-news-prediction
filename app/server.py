@@ -4,7 +4,6 @@ import os
 from api.home.home import home_router
 from api import router
 from fastapi.middleware.cors import CORSMiddleware
-# from fastapi.staticfiles import StaticFiles
 from deta import Deta
 
 import ssl

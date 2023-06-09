@@ -34,7 +34,7 @@ async def upload_file(
 
 
 @upload_router.get("/file/{file_name}")
-async def upload_file(file_name: str, token_data=Depends(permission.is_authenticated)):
+async def get_file(file_name: str):
     data = drive.get(file_name)
     content = data.read()
 
